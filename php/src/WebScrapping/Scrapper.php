@@ -52,6 +52,12 @@ class Scrapper {
           {
             $paperType = $divElement->textContent;
           }
+
+          if ($divElement->getAttribute('class') == 'volume-info')
+                {
+                  $paperId = $divElement->textContent;
+                  
+                }
         }
     }
     return [];
