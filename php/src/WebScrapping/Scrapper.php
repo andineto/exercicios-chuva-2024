@@ -23,9 +23,9 @@ class Scrapper {
         // Verificar se o elemento possui a classe "paper-card p-lg bd-gradient-left"
         if ($element->getAttribute('class') == 'paper-card p-lg bd-gradient-left')
         {
-
-        }
+          $title = $element->getElementsByTagName('h4')->item(0)->textContent;
+        } 
     }
-
+    return [];
   }
 }
