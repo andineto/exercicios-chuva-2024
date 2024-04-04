@@ -24,6 +24,8 @@ class Main {
     $maxAuthors = ($main->definePaperWithMoreAuthors($data));
     $headerRow = ($main->createHeader($maxAuthors));
     $writer->addRow(WriterEntityFactory::createRowFromArray($headerRow));
+    
+    $main->createRows($data, $writer);
     print_r($data);
   }
 
