@@ -21,6 +21,7 @@ class Main {
     print_r($data);
   }
 
+  //Função que define o paper com maior numero de autores
   function definePaperWithMoreAuthors($paperArray): int
   {
     $maxAuthors = 1;
@@ -30,6 +31,24 @@ class Main {
       }
     }
     return $maxAuthors;
+  }
+
+  //Função para escrever o header da planilha
+  function createHeader($maxAuthors): array
+  {
+    $headerRow = [
+      'ID',
+      'Title',
+      'Type',
+    ];
+    //Faz com que o paper com maior número de autores defina o header
+    for ($i = 1; $i <= $maxAuthors; $i++) {
+      $newAuthor = "Author $i";
+      $newAuthorInstitution = "Author $i Institution";
+      $headerRow[] = $newAuthor;
+      $headerRow[] = $newAuthorInstitution;
+    }
+    return $headerRow;
   }
 
 }
