@@ -1,6 +1,7 @@
 <?php
 
 namespace Chuva\Php\WebScrapping;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 
 /**
  * Runner for the Webscrapping exercice.
@@ -49,6 +50,20 @@ class Main {
       $headerRow[] = $newAuthorInstitution;
     }
     return $headerRow;
+  }
+
+  function createRows($dataArray, $writer) : void
+  {
+    foreach ($dataArray as $paper) {
+      $row = array();
+      array_push($row, $paper->id, $paper->title, $paper->type);
+      $authors = $paper->authors;
+      foreach ($authors as $author) {
+        array_push($row, $author->name, $author->institution);
+      }
+      $writer->addRow(WriterEntityFactory::createRowFromArray($row));
+    }
+    $writer->close();
   }
 
 }
