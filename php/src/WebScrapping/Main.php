@@ -68,7 +68,7 @@ class Main {
   }//end createHeader()
 
   /**
-   *
+   * Função para criar as linhas
    */
   public function createRows($dataArray, $writer): void {
     foreach ($dataArray as $paper) {
