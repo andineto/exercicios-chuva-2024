@@ -18,6 +18,7 @@ class Main {
 
     $data = (new Scrapper())->scrap($dom);
     $writer = WriterEntityFactory::createXLSXWriter();
+    $writer->openToFile('output.xlsx');
 
     // Write your logic to save the output file bellow.
     $main = new Main();
@@ -61,7 +62,6 @@ class Main {
 
   function createRows($dataArray, $writer) : void
   {
-    $writer->openToFile('output.xlsx');
     foreach ($dataArray as $paper) {
       $row = array();
       array_push($row, $paper->id, $paper->title, $paper->type);

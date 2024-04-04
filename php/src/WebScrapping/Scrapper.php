@@ -24,13 +24,13 @@ class Scrapper {
         if ($element->getAttribute('class') == 'paper-card p-lg bd-gradient-left')
         {
           $title = $element->getElementsByTagName('h4')->item(0)->textContent;
-        } 
-
+          
         //Buscando os divs com tipo, ID e autores para criar o objeto Paper
         $divElements = $element->getElementsByTagName('div');
 
         $authors = array();
         $paperType = '';
+        $paperID =  '';
         foreach($divElements as $divElement)
         {
 
@@ -67,6 +67,8 @@ class Scrapper {
         $paper->type = $paperType;
         $paper->authors = $authors;
         $papersArray[] = $paper;
+        } 
+
         
     }
 
