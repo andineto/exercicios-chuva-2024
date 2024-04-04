@@ -8,60 +8,56 @@ use Chuva\Php\WebScrapping\Entity\Person;
 /**
  * Does the scrapping of a webpage.
  */
-class Scrapper
-{
+class Scrapper {
 
+  /**
+   * Loads paper information from the HTML and returns the array with the data.
+   */
+  public function scrap(\DOMDocument $dom): array {
+    $papersArray = [];
+    // Loop através de cada tag "a".
+    $elements = $dom->getElementsByTagName('a');
 
-    /**
-     * Loads paper information from the HTML and returns the array with the data.
-     */
-    public function scrap(\DOMDocument $dom): array
-    {
-        $papersArray = [];
-        // Loop através de cada tag "a"
-        $elements = $dom->getElementsByTagName('a');
+    foreach ($elements as $element) {
+      // Verificar se o elemento possui a classe "paper-card p-lg bd-gradient-left".
+      if ($element->getAttribute('class') == 'paper-card p-lg bd-gradient-left') {
+        $title = $element->getElementsByTagName('h4')->item(0)->textContent;
 
-        foreach ($elements as $element) {
-            // Verificar se o elemento possui a classe "paper-card p-lg bd-gradient-left"
-            if ($element->getAttribute('class') == 'paper-card p-lg bd-gradient-left') {
-                $title = $element->getElementsByTagName('h4')->item(0)->textContent;
+        // Buscando os divs com tipo, ID e autores para criar o objeto Paper.
+        $divElements = $element->getElementsByTagName('div');
 
-                // Buscando os divs com tipo, ID e autores para criar o objeto Paper
-                $divElements = $element->getElementsByTagName('div');
+        $authors   = [];
+        $paperType = '';
+        $paperID   = '';
+        foreach ($divElements as $divElement) {
+          if ($divElement->getAttribute('class') == 'authors') {
+            $authorElements = $divElement->getElementsByTagName('span');
+            // Loop pelos autores e registrando-os no array de Persons $authors.
+            foreach ($authorElements as $authorElement) {
+              $authorInstitution = $authorElement->getAttribute('title');
+              $authorName        = $authorElement->textContent;
+              $person            = new Person($authorName, $authorInstitution);
+              $authors[]         = $person;
+            }
+          }
 
-                $authors   = [];
-                $paperType = '';
-                $paperID   = '';
-                foreach ($divElements as $divElement) {
-                    if ($divElement->getAttribute('class') == 'authors') {
-                        $authorElements = $divElement->getElementsByTagName('span');
-                        // Loop pelos autores e registrando-os no array de Persons $authors
-                        foreach ($authorElements as $authorElement) {
-                            $authorInstitution = $authorElement->getAttribute('title');
-                            $authorName        = $authorElement->textContent;
-                            $person            = new Person($authorName, $authorInstitution);
-                            $authors[]         = $person;
-                        }
-                    }
+          if ($divElement->getAttribute('class') == 'tags mr-sm') {
+            $paperType = $divElement->textContent;
+          }
 
-                    if ($divElement->getAttribute('class') == 'tags mr-sm') {
-                        $paperType = $divElement->textContent;
-                    }
-
-                    if ($divElement->getAttribute('class') == 'volume-info') {
-                        $paperId = $divElement->textContent;
-                    }
-                }//end foreach
-
-                // Criando objeto Paper e registrando-o no array de papers que será retornado pelo Scrapper
-                $paper         = new Paper($paperId, $title, $paperType, $authors);
-                $papersArray[] = $paper;
-            }//end if
+          if ($divElement->getAttribute('class') == 'volume-info') {
+            $paperId = $divElement->textContent;
+          }
         }//end foreach
 
-        return $papersArray;
+        // Criando objeto Paper e registrando-o no array de papers que será retornado pelo Scrapper.
+        $paper         = new Paper($paperId, $title, $paperType, $authors);
+        $papersArray[] = $paper;
+      }//end if
+    }//end foreach
 
-    }//end scrap()
+    return $papersArray;
 
+  }//end scrap()
 
 }//end class
