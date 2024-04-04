@@ -7,6 +7,7 @@ namespace Chuva\Php\WebScrapping;
  */
 class Main {
 
+
   /**
    * Main runner, instantiates a Scrapper and runs.
    */
@@ -18,6 +19,17 @@ class Main {
 
     // Write your logic to save the output file bellow.
     print_r($data);
+  }
+
+  function definePaperWithMoreAuthors($paperArray): int
+  {
+    $maxAuthors = 1;
+    foreach ($paperArray as $paper) {
+      if (count($paper->authors) > $maxAuthors) {
+        $maxAuthors = count($paper->authors);
+      }
+    }
+    return $maxAuthors;
   }
 
 }
