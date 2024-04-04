@@ -30,6 +30,7 @@ class Scrapper {
         $divElements = $element->getElementsByTagName('div');
 
         $authors = array();
+        $paperType = '';
         foreach($divElements as $divElement)
         {
 
@@ -44,6 +45,12 @@ class Scrapper {
               $person = new Person($authorName, $authorInstitution);
               $authors[] = $person;
             }
+
+          }
+                      
+          if ($divElement->getAttribute('class') == 'tags mr-sm')
+          {
+            $paperType = $divElement->textContent;
           }
         }
     }
