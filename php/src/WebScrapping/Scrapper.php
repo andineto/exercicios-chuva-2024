@@ -66,7 +66,10 @@ class Scrapper {
         $paper->title = $title;
         $paper->type = $paperType;
         $paper->authors = $authors;
+        $papersArray[] = $paper;
+        
     }
-    return [];
+
+    return $papersArray;
   }
 }
