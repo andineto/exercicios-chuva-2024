@@ -19,7 +19,8 @@ class Scrapper {
     $elements = $dom->getElementsByTagName('a');
 
     foreach ($elements as $element) {
-      // Verificar se o elemento possui a classe "paper-card p-lg bd-gradient-left".
+      // Verificar se o elemento possui a classe
+      // "paper-card p-lg bd-gradient-left".
       if ($element->getAttribute('class') == 'paper-card p-lg bd-gradient-left') {
         $title = $element->getElementsByTagName('h4')->item(0)->textContent;
 
@@ -50,7 +51,8 @@ class Scrapper {
           }
         }//end foreach
 
-        // Criando objeto Paper e registrando-o no array de papers que será retornado pelo Scrapper.
+        // Criando objeto Paper e registrando-o no
+        // array de papers que será retornado pelo Scrapper.
         $paper         = new Paper($paperId, $title, $paperType, $authors);
         $papersArray[] = $paper;
       }//end if
