@@ -54,6 +54,7 @@ class Main {
 
   function createRows($dataArray, $writer) : void
   {
+    $writer->openToFile('output.xlsx');
     foreach ($dataArray as $paper) {
       $row = array();
       array_push($row, $paper->id, $paper->title, $paper->type);
