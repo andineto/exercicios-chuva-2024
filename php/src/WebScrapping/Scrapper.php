@@ -59,6 +59,10 @@ class Scrapper {
                   
                 }
         }
+
+        //Criando objeto Paper e registrando-o no array de papers que será retornado pelo Scrapper
+        $paper = new Paper($paperId, $title, $paperType, $authors);
+
     }
     return [];
   }
