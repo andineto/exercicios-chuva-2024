@@ -25,6 +25,27 @@ class Scrapper {
         {
           $title = $element->getElementsByTagName('h4')->item(0)->textContent;
         } 
+
+        //Buscando os divs com tipo, ID e autores para criar o objeto Paper
+        $divElements = $element->getElementsByTagName('div');
+
+        $authors = array();
+        foreach($divElements as $divElement)
+        {
+
+          if($divElement->getAttribute('class') == 'authors')
+          {
+            $authorElements = $divElement->getElementsByTagName('span');
+          //Loop pelos autores e registrando-os no array de Persons $authors
+            foreach ($authorElements as $authorElement) 
+            {
+              $authorInstitution = $authorElement->getAttribute('title');
+              $authorName = $authorElement->textContent;
+              $person = new Person($authorName, $authorInstitution);
+              $authors[] = $person;
+            }
+          }
+        }
     }
     return [];
   }
