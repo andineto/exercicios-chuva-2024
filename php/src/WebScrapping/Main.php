@@ -20,6 +20,10 @@ class Main {
     $writer = WriterEntityFactory::createXLSXWriter();
 
     // Write your logic to save the output file bellow.
+    $main = new Main();
+    $maxAuthors = ($main->definePaperWithMoreAuthors($data));
+    $headerRow = ($main->createHeader($maxAuthors));
+    $writer->addRow(WriterEntityFactory::createRowFromArray($headerRow));
     print_r($data);
   }
 
